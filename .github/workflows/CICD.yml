@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4 
       with:
-        fetch-depth: 0
+        fetch-depth: 0  # Importante para que Sonar analice bien el historial
     
     - name: Set up JDK 21
       uses: actions/setup-java@v4
@@ -35,7 +35,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=w4shburn-l_spring-app-duoc
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=w4shburn-l_spring-app-duoc -Dsonar.organization=w4shburn-l -Dsonar.host.url=https://sonarcloud.io
       
     - name: Empaquetar la aplicación
       run: mvn clean package -DskipTests
