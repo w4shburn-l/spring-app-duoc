@@ -2,14 +2,14 @@
 
 Este repositorio contiene una API desarrollada en Spring Boot (Java 21) enfocada en demostrar la implementación de un flujo de Integración y Despliegue Continuo (CI/CD) utilizando GitHub Actions, junto con análisis de calidad de código y contenerización.
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 * **Backend:** Java 21, Spring Boot, Maven.
 * **Contenerización:** Docker, Docker Compose.
 * **Automatización CI/CD:** GitHub Actions.
 * **Análisis de Seguridad y Calidad:** SonarCloud.
 
-## ⚙️ Arquitectura del Pipeline CI/CD
+##  Arquitectura del Pipeline CI/CD
 
 El flujo automatizado (`CICD.yml`) se activa cada vez que se realiza un *push* a la rama `main` y consta de los siguientes pasos:
 
@@ -20,14 +20,14 @@ El flujo automatizado (`CICD.yml`) se activa cada vez que se realiza un *push* a
 5. **Empaquetado:** Compila el proyecto y genera el archivo ejecutable `.jar` omitiendo las pruebas ya validadas.
 6. **Construcción de Imagen Docker:** Utiliza el `Dockerfile` para construir una imagen de contenedor (`mi-microservicio:latest`) lista para ser desplegada en cualquier entorno.
 
-## 🔍 Trazabilidad y Calidad
+##  Trazabilidad y Calidad
 
 La implementación de este pipeline garantiza una alta trazabilidad y calidad en el ciclo de vida del software:
 * **Feedback Inmediato:** Cualquier error de compilación o prueba fallida es notificado al instante en la pestaña *Actions*.
 * **Seguridad Automatizada:** La integración con SonarCloud actúa como un filtro estricto que impide la subida de código vulnerable a producción.
 * **Consistencia:** Al contenerizar la aplicación con Docker, garantizamos que el microservicio funcionará exactamente igual en el entorno de desarrollo, pruebas y producción.
 
-## 🚀 Ejecución Local
+##  Ejecución Local
 
 Para levantar este proyecto de manera local, asegúrate de tener Docker instalado y ejecuta el siguiente comando en la raíz del proyecto:
 
