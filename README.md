@@ -1,0 +1,85 @@
+# Spring Boot Greetings API
+
+Sample Spring Boot application for the **Duoc DevOps** class. Students can use this project to learn about building, running, and deploying a Java REST API.
+
+## Prerequisites
+
+- **Java 21** — Download the Microsoft Build of OpenJDK 21 from:
+  https://learn.microsoft.com/en-us/java/openjdk/download
+- **Apache Maven 3.8+**
+
+### Installing Maven on Windows (using Chocolatey)
+
+1. Install Chocolatey from an **admin PowerShell** terminal:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+2. Install Maven from an **admin PowerShell** terminal:
+
+```powershell
+choco install maven --force
+```
+
+> **Important:** After installing Maven, restart your terminal or VS Code editor for the changes to take effect.
+
+### Verify your installation
+
+```bash
+java -version
+mvn -version
+```
+
+## Build & Run
+
+### Compile the project
+
+```bash
+mvn clean compile
+```
+
+### Run tests
+
+```bash
+mvn test
+```
+
+### Package into a JAR
+
+```bash
+mvn clean package
+```
+
+### Run the application
+
+Using Maven:
+
+```bash
+mvn spring-boot:run
+```
+
+Or with the JAR directly:
+
+```bash
+java -jar target/spring-app-duoc-0.0.1-SNAPSHOT.jar
+```
+
+The application starts on **port 8080**.
+
+## Endpoints
+
+| Method | URL | Description |
+|--------|-----|-------------|
+| GET | `/` | Welcome page with links to the API documentation |
+| GET | `/greetings` | Returns `Hello world` |
+| GET | `/greetings?message=YourName` | Returns `Hello YourName` |
+
+## API Documentation
+
+Once the application is running:
+
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+- **OpenAPI spec (JSON):** http://localhost:8080/api-docs
