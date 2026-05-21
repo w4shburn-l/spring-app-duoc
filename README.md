@@ -1,85 +1,35 @@
-# Spring Boot Greetings API
+# Spring Boot App - CI/CD Pipeline
 
-Sample Spring Boot application for the **Duoc DevOps** class. Students can use this project to learn about building, running, and deploying a Java REST API.
+Este repositorio contiene una API desarrollada en Spring Boot (Java 21) enfocada en demostrar la implementación de un flujo de Integración y Despliegue Continuo (CI/CD) utilizando GitHub Actions, junto con análisis de calidad de código y contenerización.
 
-## Prerequisites
+## 🛠️ Tecnologías Utilizadas
 
-- **Java 21** — Download the Microsoft Build of OpenJDK 21 from:
-  https://learn.microsoft.com/en-us/java/openjdk/download
-- **Apache Maven 3.8+**
+* **Backend:** Java 21, Spring Boot, Maven.
+* **Contenerización:** Docker, Docker Compose.
+* **Automatización CI/CD:** GitHub Actions.
+* **Análisis de Seguridad y Calidad:** SonarCloud.
 
-### Installing Maven on Windows (using Chocolatey)
+## ⚙️ Arquitectura del Pipeline CI/CD
 
-1. Install Chocolatey from an **admin PowerShell** terminal:
+El flujo automatizado (`CICD.yml`) se activa cada vez que se realiza un *push* a la rama `main` y consta de los siguientes pasos:
 
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
+1. **Checkout del Código:** Extrae la última versión del repositorio garantizando todo el historial (fetch-depth: 0).
+2. **Configuración del Entorno:** Prepara el entorno con JDK 21 (Temurin) y configura la caché de dependencias de Maven.
+3. **Pruebas Unitarias:** Ejecuta `mvn test` para asegurar que los cambios no rompen la lógica existente.
+4. **Análisis de Código (SonarCloud):** Escanea el código en busca de vulnerabilidades, *code smells* y bugs. Si el código no cumple con los estándares de seguridad (Quality Gate), el pipeline falla y bloquea el despliegue.
+5. **Empaquetado:** Compila el proyecto y genera el archivo ejecutable `.jar` omitiendo las pruebas ya validadas.
+6. **Construcción de Imagen Docker:** Utiliza el `Dockerfile` para construir una imagen de contenedor (`mi-microservicio:latest`) lista para ser desplegada en cualquier entorno.
 
-2. Install Maven from an **admin PowerShell** terminal:
+## 🔍 Trazabilidad y Calidad
 
-```powershell
-choco install maven --force
-```
+La implementación de este pipeline garantiza una alta trazabilidad y calidad en el ciclo de vida del software:
+* **Feedback Inmediato:** Cualquier error de compilación o prueba fallida es notificado al instante en la pestaña *Actions*.
+* **Seguridad Automatizada:** La integración con SonarCloud actúa como un filtro estricto que impide la subida de código vulnerable a producción.
+* **Consistencia:** Al contenerizar la aplicación con Docker, garantizamos que el microservicio funcionará exactamente igual en el entorno de desarrollo, pruebas y producción.
 
-> **Important:** After installing Maven, restart your terminal or VS Code editor for the changes to take effect.
+## 🚀 Ejecución Local
 
-### Verify your installation
-
-```bash
-java -version
-mvn -version
-```
-
-## Build & Run
-
-### Compile the project
+Para levantar este proyecto de manera local, asegúrate de tener Docker instalado y ejecuta el siguiente comando en la raíz del proyecto:
 
 ```bash
-mvn clean compile
-```
-
-### Run tests
-
-```bash
-mvn test
-```
-
-### Package into a JAR
-
-```bash
-mvn clean package
-```
-
-### Run the application
-
-Using Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-Or with the JAR directly:
-
-```bash
-java -jar target/spring-app-duoc-0.0.1-SNAPSHOT.jar
-```
-
-The application starts on **port 8080**.
-
-## Endpoints
-
-| Method | URL | Description |
-|--------|-----|-------------|
-| GET | `/` | Welcome page with links to the API documentation |
-| GET | `/greetings` | Returns `Hello world` |
-| GET | `/greetings?message=YourName` | Returns `Hello YourName` |
-
-## API Documentation
-
-Once the application is running:
-
-- **Swagger UI:** http://localhost:8080/swagger-ui.html
-- **OpenAPI spec (JSON):** http://localhost:8080/api-docs
+docker-compose up -d --build
